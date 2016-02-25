@@ -54,18 +54,18 @@ public class HelloWorldSubscriber
 
       // Create a Partition QoS with "HelloWorld example" as partition.
       Partition partition = PolicyFactory.getPolicyFactory(env)
-            .Partition().withName("com/prismtech/node/*");
+            .Partition().withName("com/prismtech/node");
 
       // Create a Subscriber using default QoS except partition
       Subscriber sub = p.createSubscriber(p.getDefaultSubscriberQos().withPolicy(partition));
 
       // Create Reliability and Durability QoS
-      Reliability r = PolicyFactory.getPolicyFactory(env).Reliability().withReliable();
-      Durability d = PolicyFactory.getPolicyFactory(env).Durability().withTransient();
+      //Reliability r = PolicyFactory.getPolicyFactory(env).Reliability().withReliable();
+      //Durability d = PolicyFactory.getPolicyFactory(env).Durability().withTransient();
 
       // Create DataReader on our topic with default QoS except Reliability and Durability
       DataReader<NodeInfo> reader = sub.createDataReader(topic,
-            sub.getDefaultDataReaderQos().withPolicies(r, d));
+            sub.getDefaultDataReaderQos());//.withPolicies(r, d));
 
       // Prepare a List of Sample<Msg> for received samples
       List<Sample<NodeInfo>> samples = new ArrayList<Sample<NodeInfo>>();
