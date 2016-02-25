@@ -10,4 +10,4 @@
 #    for full copyright notice and license terms.
 #
 
-java -cp target/classes:../../lib/cafe.jar helloworld.HelloWorldSubscriber
+java -cp target/classes:./lib/cafe.jar helloedison.HelloWorldSubscriber -Dddsi.network.interface=em1 

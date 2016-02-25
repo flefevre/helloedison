@@ -52,7 +52,7 @@ public class HelloWorldSubscriber
 
       // Create a Partition QoS with "HelloWorld example" as partition.
       Partition partition = PolicyFactory.getPolicyFactory(env)
-            .Partition().withName("HelloWorld example");
+            .Partition().withName("com/prismtech/node");
 
       // Create a Subscriber using default QoS except partition
       Subscriber sub = p.createSubscriber(p.getDefaultSubscriberQos().withPolicy(partition));
