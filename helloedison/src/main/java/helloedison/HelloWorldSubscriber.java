@@ -25,6 +25,8 @@ import org.omg.dds.sub.Sample;
 import org.omg.dds.sub.Subscriber;
 import org.omg.dds.topic.Topic;
 
+import com.prismtech.agentv.core.types.NodeInfo;
+
 import HelloWorldData.Msg;
 
 
@@ -48,11 +50,11 @@ public class HelloWorldSubscriber
       DomainParticipant p = dpf.createParticipant(0);
 
       // Create a Topic named "HelloWorldData_Msg" and with "HelloWorldData.Msg" as a type.
-      Topic<Msg> topic = p.createTopic("HelloWorldData_Msg", Msg.class);
+      Topic<NodeInfo> topic = p.createTopic("NodeInfo", NodeInfo.class);
 
       // Create a Partition QoS with "HelloWorld example" as partition.
       Partition partition = PolicyFactory.getPolicyFactory(env)
-            .Partition().withName("com/prismtech/node");
+            .Partition().withName("com/prismtech/node/*");
 
       // Create a Subscriber using default QoS except partition
       Subscriber sub = p.createSubscriber(p.getDefaultSubscriberQos().withPolicy(partition));
@@ -62,11 +64,11 @@ public class HelloWorldSubscriber
       Durability d = PolicyFactory.getPolicyFactory(env).Durability().withTransient();
 
       // Create DataReader on our topic with default QoS except Reliability and Durability
-      DataReader<Msg> reader = sub.createDataReader(topic,
+      DataReader<NodeInfo> reader = sub.createDataReader(topic,
             sub.getDefaultDataReaderQos().withPolicies(r, d));
 
       // Prepare a List of Sample<Msg> for received samples
-      List<Sample<Msg>> samples = new ArrayList<Sample<Msg>>();
+      List<Sample<NodeInfo>> samples = new ArrayList<Sample<NodeInfo>>();
 
       // Try to take samples every seconds. We stop as soon as we get some.
       while (samples.size() == 0)
@@ -83,7 +85,7 @@ public class HelloWorldSubscriber
       }
       System.out.println(" ________________________________________________________________");
       System.out.println("|");
-      System.out.println("| Received message : " + samples.get(0).getData().message);
+      System.out.println("| Received message : " + samples.get(0).getData().uuid);
       System.out.println("|________________________________________________________________");
       System.out.println("");
 
