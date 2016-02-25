@@ -1,0 +1,75 @@
+<!--
+
+                                Vortex Cafe
+
+       This software and documentation are Copyright 2010 to 2015 PrismTech
+       Limited and its licensees. All rights reserved. See file:
+
+                              docs/LICENSE.html
+
+       for full copyright notice and license terms.
+
+-->
+<project name="helloworld" default="package" basedir=".">
+    
+  <!-- global properties -->
+  <property name="src"         location="src/main/java"/>
+  <property name="idl"         location="src/main/idl/HelloWorldData.idl"/>
+  <property name="target"      location="target"/>
+  <property name="classes"     location="${target}/classes"/>
+  <property name="gen-src"     location="${target}/generated-sources"/>
+  <property name="jar"         location="${target}/helloworld.jar"/>
+  <property name="cafe"        location="../../lib/cafe.jar"/>
+  <property name="idl2j"       location="../../lib/idl2j.jar"/>
+
+  <target name="init">
+    <mkdir dir="${target}"/>
+    <mkdir dir="${classes}"/>
+  </target>
+
+  <target name="idl" depends="init"
+        description="compile the idl" >
+    <!-- Compile the idl file ${idl} into ${gen-src} -->
+    <java classname="com.prismtech.cafe.idl2j.Compiler"
+    	classpath="${idl2j}"
+        fork="false"
+        failonerror="true">
+      <arg value="-td"/>
+      <arg value="${gen-src}"/>
+      <arg value="${idl}"/>
+    </java>
+  </target>  
+  
+
+  <target name="gen-compile" depends="idl"
+        description="compile the generates sources" >
+    <!-- Compile the java code from ${gen-src} into ${classes} -->
+    <javac srcdir="${gen-src}" 
+    	   destdir="${classes}"
+           classpath="${cafe}"
+    	   includeantruntime="false"/>
+  </target>
+  
+
+  <target name="compile" depends="gen-compile"
+        description="compile the sources" >
+    <!-- Compile the java code from ${gen-src} into ${classes} -->
+    <javac srcdir="${src}" 
+    	   destdir="${classes}"
+           classpath="${cafe}"
+  	       includeantruntime="false"/>
+  </target>
+
+  <target name="package" depends="compile"
+        description="generate the distribution" >
+    <!-- Put everything in ${classes} into the ${jar} file -->
+    <jar jarfile="${jar}" basedir="${classes}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${target} directory tree -->
+    <delete dir="${target}"/>
+  </target>
+</project>
+    
