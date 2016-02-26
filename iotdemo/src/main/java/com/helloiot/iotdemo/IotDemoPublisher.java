@@ -23,8 +23,7 @@ import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.topic.Topic;
 
-import HelloWorldData.Msg;
-
+import com.prismtech.agentv.core.types.NodeInfo;
 
 public class IotDemoPublisher
 {
@@ -46,11 +45,11 @@ public class IotDemoPublisher
       DomainParticipant p = dpf.createParticipant(0);
 
       // Create a Topic named "HelloWorldData_Msg" and with "HelloWorldData.Msg" as a type.
-      Topic<Msg> topic = p.createTopic("HelloWorldData_Msg", Msg.class);
+      Topic<NodeInfo> topic = p.createTopic("NodeInfo", NodeInfo.class);
 
       // Create a Partition QoS with "HelloWorld example" as partition.
       Partition partition = PolicyFactory.getPolicyFactory(env)
-            .Partition().withName("HelloWorld example");
+            .Partition().withName("com/prismtech/node");
 
       // Create a Subscriber using default QoS except partition
       Publisher pub = p.createPublisher(p.getDefaultPublisherQos().withPolicy(partition));
@@ -60,17 +59,17 @@ public class IotDemoPublisher
       Durability d = PolicyFactory.getPolicyFactory(env).Durability().withTransient();
 
       // Create DataReader on our topic with default QoS except Reliability and Durability
-      DataWriter<Msg> writer = pub.createDataWriter(topic,
+      DataWriter<NodeInfo> writer = pub.createDataWriter(topic,
             pub.getDefaultDataWriterQos().withPolicies(r, d));
 
       // The message we want to publish
-      Msg msg = new Msg(1, "Hello World");
+      NodeInfo msg = new NodeInfo("uuid","info");
 
       try
       {
          System.out.println(" ________________________________________________________________");
          System.out.println("|");
-         System.out.println("| Publish message : " + msg.message);
+         System.out.println("| Publish message : " + msg.uuid+"\t"+msg.info);
          System.out.println("|________________________________________________________________");
          System.out.println("");
 
@@ -86,7 +85,7 @@ public class IotDemoPublisher
       try
       {
          // Wait to ensure data is received before we delete writer
-         Thread.sleep(1000);
+         Thread.sleep(100000);
       }
       catch (InterruptedException e1)
       {
