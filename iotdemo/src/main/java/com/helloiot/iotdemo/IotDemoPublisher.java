@@ -8,7 +8,7 @@
  *
  *    for full copyright notice and license terms.
  */
-package helloedison;
+package com.helloiot.iotdemo;
 
 import java.util.concurrent.TimeoutException;
 
@@ -26,7 +26,7 @@ import org.omg.dds.topic.Topic;
 import HelloWorldData.Msg;
 
 
-public class HelloWorldPublisher
+public class IotDemoPublisher
 {
 
    public static void main(String[] args)
@@ -37,7 +37,7 @@ public class HelloWorldPublisher
 
       // Instantiate a DDS ServiceEnvironment
       ServiceEnvironment env = ServiceEnvironment.createInstance(
-            HelloWorldPublisher.class.getClassLoader());
+            IotDemoPublisher.class.getClassLoader());
 
       // Get the DomainParticipantFactory
       DomainParticipantFactory dpf = DomainParticipantFactory.getInstance(env);

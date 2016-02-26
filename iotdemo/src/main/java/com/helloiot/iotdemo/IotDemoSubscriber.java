@@ -8,7 +8,7 @@
  *
  *    for full copyright notice and license terms.
  */
-package helloedison;
+package com.helloiot.iotdemo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,7 @@ import org.omg.dds.topic.Topic;
 
 import com.prismtech.agentv.core.types.NodeInfo;
 
-import HelloWorldData.Msg;
-
-
-public class HelloWorldSubscriber
+public class IotDemoSubscriber
 {
 
    public static void main(String[] args)
@@ -41,7 +38,7 @@ public class HelloWorldSubscriber
 
       // Instantiate a DDS ServiceEnvironment
       ServiceEnvironment env = ServiceEnvironment.createInstance(
-            HelloWorldSubscriber.class.getClassLoader());
+            IotDemoSubscriber.class.getClassLoader());
 
       // Get the DomainParticipantFactory
       DomainParticipantFactory dpf = DomainParticipantFactory.getInstance(env);
