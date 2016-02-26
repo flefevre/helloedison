@@ -69,12 +69,14 @@ public class IotDemoPublisher
       {
          System.out.println(" ________________________________________________________________");
          System.out.println("|");
-         System.out.println("| Publish message : " + msg.uuid+"\t"+msg.info);
-         System.out.println("|________________________________________________________________");
-         System.out.println("");
+         
+
 
          // Publish the message
          for(int i=0; i<10;i++){
+        	 msg.uuid = "Uuid"+i;
+        	 msg.info = "Info"+i;
+        	 System.out.println("| Publish message : " + msg.uuid+"\t"+msg.info);
         	 writer.write(msg);
         	 try {
 				Thread.sleep(1000);
@@ -83,7 +85,8 @@ public class IotDemoPublisher
 				e.printStackTrace();
 			}
          }
-         
+         System.out.println("|________________________________________________________________");
+         System.out.println("");
          
       }
       catch (TimeoutException e)
