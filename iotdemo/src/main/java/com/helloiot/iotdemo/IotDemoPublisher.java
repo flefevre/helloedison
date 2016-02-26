@@ -77,7 +77,7 @@ public class IotDemoPublisher
          for(int i=0; i<10;i++){
         	 writer.write(msg);
         	 try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -95,7 +95,7 @@ public class IotDemoPublisher
       try
       {
          // Wait to ensure data is received before we delete writer
-         Thread.sleep(100000000);
+         Thread.sleep(1000);
       }
       catch (InterruptedException e1)
       {
